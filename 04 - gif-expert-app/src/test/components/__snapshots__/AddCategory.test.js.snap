@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pruebas en el componente <AddCategory /> Debe de mostrarse correctamente  1`] = `
+<Fragment>
+  <form
+    onSubmit={[Function]}
+  >
+    <p>
+       
+       
+    </p>
+    <input
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </form>
+</Fragment>
+`;
+
+exports[`Pruebas en el componente <AddCategory /> Debe de mostrarse de mostrarse correctamente  1`] = `
+<Fragment>
+  <form
+    onSubmit={[Function]}
+  >
+    <p>
+       
+       
+    </p>
+    <input
+      onChange={[Function]}
+      type="text"
+      value=""
+    />
+  </form>
+</Fragment>
+`;
