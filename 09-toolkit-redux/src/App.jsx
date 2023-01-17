@@ -31,7 +31,7 @@ function App() {
           Decrement
         </button>
 
-        <button onClick={ () => { dispatch( incrementby(5) ) } }>
+        <button onClick={ () => { dispatch( incrementby(2) ) } }>
           Increment by 2
         </button>
       </div>
