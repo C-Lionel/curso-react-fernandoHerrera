@@ -1,14 +1,21 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { Grid, Typography, TextField, Button, Link } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
+import { startCreatingUserWithEmailPassword } from '../../store/auth';
 
 export const RegisterPage = () => {
 
+  const dispatch = useDispatch()
+
+  const [formSubmitted, setFormSubmitted] = useState( false );
+
   const formData = {
-    email: 'lio2014vt@gmail.com',
-    password: '123456',
-    displayName: 'Lionel Cancellieri'
+    email: '',
+    password: '',
+    displayName: ''
   }
 
   const formValidations = {
@@ -25,8 +32,10 @@ export const RegisterPage = () => {
   console.log(displayNameValid)
 
   const onSubmit = (event) => {
-    event.preventDefault()
-    console.log(formState)
+    event.preventDefault();
+    setFormSubmitted( true );
+    if ( !isFormValid ) return;
+    dispatch( startCreatingUserWithEmailPassword(formState) )
   }
 
   return (
@@ -40,12 +49,12 @@ export const RegisterPage = () => {
             <TextField
               label="Nombre completo"
               type="text"
-              placeholder="Lionel Cancellieri"
+              placeholder="Nombre completo"
               fullWidth
               name='displayName'
               value={displayName}
               onChange={onInputChange}
-              error={ !displayNameValid }
+              error={ !!displayNameValid && formSubmitted }
               helperText={ displayNameValid }
             />
           </Grid>
@@ -59,6 +68,8 @@ export const RegisterPage = () => {
               name='email'
               value={email}
               onChange={onInputChange}
+              error={ !!emailValid && formSubmitted }
+              helperText={ emailValid }
             />
           </Grid>
 
@@ -71,6 +82,8 @@ export const RegisterPage = () => {
               name='password'
               value={password}
               onChange={onInputChange}
+              error={ !!passwordValid && formSubmitted }
+              helperText={ passwordValid }
             />
           </Grid>
 
