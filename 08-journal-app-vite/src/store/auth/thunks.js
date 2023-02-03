@@ -1,40 +1,55 @@
 
-import { registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
+import { loginWithEmalPassword, registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
 import { checkingCredentials, login, logout } from "./"
 
 
 export const checkingAuthentication = (email, password) => {
 
     return async (dispatch) => {
-        dispatch( checkingCredentials() );
+        dispatch(checkingCredentials());
     }
 }
 
 export const startGoogleSignIn = () => {
 
     return async (dispatch) => {
-        dispatch( checkingCredentials() );
+        dispatch(checkingCredentials());
         const result = await singInWithGoogle();
-        if (result.ok) return dispatch( logout(result.errorMessage) );
-        dispatch( login( result ) )
+        if (result.ok) return dispatch(logout(result.errorMessage));
+        dispatch(login(result))
     }
 }
 
-export const startCreatingUserWithEmailPassword = ( { email, password, displayName } ) => {
+export const startCreatingUserWithEmailPassword = ({ email, password, displayName }) => {
 
-    return  async ( dispatch ) => {
+    return async (dispatch) => {
 
-        dispatch( checkingCredentials() );
+        dispatch(checkingCredentials());
 
-        const resp = await registerUserWithEmailPassword( { email, password, displayName } )
+        const resp = await registerUserWithEmailPassword({ email, password, displayName })
 
         const { ok, uid, photoURL, errorMessage } = resp;
 
-        if ( !ok ) return dispatch( logout({ errorMessage }) )
+        if (!ok) return dispatch(logout({ errorMessage }))
 
-        dispatch( login( { uid, displayName, email, photoURL } ) )
-        
+        dispatch(login({ uid, displayName, email, photoURL }))
+
     }
 
+}
+
+export const startLoginWithEmailPassword = ({ email, password }) => {
+
+    return async (dispatch) => {
+
+        dispatch( checkingCredentials() );
+
+        const result = await loginWithEmalPassword( { email, password } )
+
+        if (!result.ok) return dispatch( logout( result ) )
+
+        dispatch( login(result) )
+        
+    }
 }
 
