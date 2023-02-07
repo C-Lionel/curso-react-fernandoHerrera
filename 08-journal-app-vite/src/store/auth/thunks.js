@@ -1,5 +1,5 @@
 
-import { loginWithEmalPassword, registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
+import { loginWithEmalPassword, logoutFirebase, registerUserWithEmailPassword, singInWithGoogle } from "../../firebase/providers"
 import { checkingCredentials, login, logout } from "./"
 
 
@@ -48,8 +48,10 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
 
         if (!result.ok) return dispatch( logout( result ) )
 
-        dispatch( login(result) )
+        dispatch( login( result ) )
         
     }
 }
+
+
 

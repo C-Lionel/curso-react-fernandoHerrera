@@ -1,5 +1,6 @@
 
-import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword  } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, getAuth, signOut  } from 'firebase/auth';
+import { logout } from '../store/auth';
 import { FirebaseAuth } from './config';
 
 const googleProvider = new GoogleAuthProvider();
@@ -80,3 +81,12 @@ export const loginWithEmalPassword = async ( { email, password } ) => {
         
     }
 }
+
+export const logoutFirebase = () => {
+    return async(dispatch) => {
+        const auth = getAuth();
+        await signOut(auth);
+        dispatch(logout());
+    }
+}
+
