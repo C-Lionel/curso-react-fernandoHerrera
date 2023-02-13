@@ -1,10 +1,17 @@
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material";
 import { AppBar, Grid, IconButton, Toolbar, Typography } from "@mui/material";
-import { FirebaseAuth } from "../../firebase/config";
-import { logoutFirebase } from "../../firebase/providers";
+import { useDispatch } from "react-redux";
+
+import { startLogout } from "../../store/auth";
 
 
 export const NavBar = ({ drawerWidth = 240 }) => {
+
+    const dispatch = useDispatch()
+
+    const onLogout = () => {
+        dispatch( startLogout() )
+    }
 
     return (
         <AppBar
@@ -28,7 +35,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
                     <Typography variant="h6" noWrap component='div'> JournalApp </Typography>
                     <IconButton
                         color="error"
-                        onClick={ logoutFirebase }
+                        onClick={ onLogout }
                     >
                         <LogoutOutlined />
                     </IconButton>

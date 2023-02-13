@@ -1,8 +1,7 @@
-import { CircularProgress, Grid } from '@mui/material'
-import React from 'react'
+import { CircularProgress, Grid } from '@mui/material';
+
 
 export const CheckingAuth = () => {
-
     return (
         <Grid
             container
@@ -13,10 +12,12 @@ export const CheckingAuth = () => {
             sx={{ minHeight: '100vh', backgroundColor: 'primary.main', padding: 4 }}
         >
 
-            <Grid container direction='row' justifyContent='center' >
+            <Grid container
+                direction='row'
+                justifyContent='center'
+            >
                 <CircularProgress color='warning' />
             </Grid>
-
         </Grid>
     )
 }

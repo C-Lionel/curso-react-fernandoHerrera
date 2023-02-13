@@ -15,7 +15,7 @@ export const startGoogleSignIn = () => {
     return async (dispatch) => {
         dispatch(checkingCredentials());
         const result = await singInWithGoogle();
-        if (result.ok) return dispatch(logout(result.errorMessage));
+        if ( !result.ok ) return dispatch(logout(result.errorMessage));
         dispatch(login(result))
     }
 }
@@ -53,5 +53,14 @@ export const startLoginWithEmailPassword = ({ email, password }) => {
     }
 }
 
+export const startLogout = () => {
 
+    return async ( dispatch ) => {
+
+        await logoutFirebase();
+        
+        dispatch( logout() )
+    }
+    
+}
 
