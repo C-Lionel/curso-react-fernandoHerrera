@@ -15,6 +15,8 @@ export const loadNotes = async (uid = '') => {
             ...doc.data()
         });
     } );
+    
+    console.log(notes)
 
     return notes;
    
