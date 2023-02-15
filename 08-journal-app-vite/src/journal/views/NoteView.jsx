@@ -1,14 +1,14 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { SaveOutlined } from "@mui/icons-material";
-import { Button, Grid, TextField, Typography } from "@mui/material";
+import { SaveOutlined, UploadOutlined } from "@mui/icons-material";
+import { Button, Grid, IconButton, TextField, Typography } from "@mui/material";
 import Swal from "sweetalert2";
 import 'sweetalert2/dist/sweetalert2.css';
 
 import { useForm } from '../../hooks/useForm';
 import { ImageGallery } from "../components";
-import { setActiveNote, startSaveNote } from "../../store/journal";
+import { setActiveNote, startSaveNote, startUploadingFiles } from "../../store/journal";
 
 export const NoteView = () => {
 
@@ -22,6 +22,8 @@ export const NoteView = () => {
         const newDate = new Date(date);
         return newDate.toUTCString();
     }, [date]);
+
+    const fileInputRef = useRef()
 
     useEffect(() => {
         dispatch(setActiveNote(formState))
@@ -37,6 +39,11 @@ export const NoteView = () => {
         dispatch( startSaveNote() );
     }
 
+    const onFileInputChange = ( event ) => {
+        if( event.target.files === 0 ) return;
+        dispatch( startUploadingFiles( event.target.files ) )
+    }
+
     return (
         <Grid className='animate__animated animate__fadeIn animate__faster' container direction='row' justifyContent='space-between' alignItems='center' sx={{ mb: 1 }}>
             <Grid item>
@@ -44,6 +51,23 @@ export const NoteView = () => {
             </Grid>
 
             <Grid item>
+
+                <input
+                    type='file'
+                    multiple
+                    ref={ fileInputRef }
+                    onChange={ onFileInputChange }
+                    style={{ display: 'none' }}
+                 />
+
+                 <IconButton
+                    color='primary'
+                    disabled={ isSaving }
+                    onClick={ () => {fileInputRef.current.click()} } // simula con el useRef el click para subir las imagenes 
+                 >
+                    <UploadOutlined />
+                 </IconButton>
+
                 <Button
                     disabled={ isSaving }
                     onClick={ onSaveNote }
@@ -83,7 +107,7 @@ export const NoteView = () => {
             </Grid>
 
             {/* Image gallery */}
-            <ImageGallery />
+            <ImageGallery images = { note.imageUrls } />
 
         </Grid>
     )
