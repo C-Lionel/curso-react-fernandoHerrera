@@ -45,11 +45,12 @@ export const NoteView = () => {
     }
 
     const onDelete = () => {
-        dispatch( startDeletingNote() );
+        dispatch(startDeletingNote());
     }
 
     return (
         <Grid className='animate__animated animate__fadeIn animate__faster' container direction='row' justifyContent='space-between' alignItems='center' sx={{ mb: 1 }}>
+
             <Grid item>
                 <Typography fontSize={39} fontWeight='light' > {dateString} </Typography>
             </Grid>
