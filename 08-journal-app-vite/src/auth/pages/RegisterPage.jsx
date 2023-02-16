@@ -1,10 +1,23 @@
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
-import { Grid, Typography, TextField, Button, Link, Alert } from '@mui/material';
+import { Alert, Button, Grid, Link, TextField, Typography } from '@mui/material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
+
 import { startCreatingUserWithEmailPassword } from '../../store/auth';
+
+const formData = {
+  email: '',
+  password: '',
+  displayName: ''
+}
+
+const formValidations = {
+  email: [(value) => value.includes('@'), 'El correo debe de tener una @.'],
+  password: [(value) => value.length >= 6, 'El password debe de tener más de 6 letras.'],
+  displayName: [(value) => value.length >= 1, 'El nombre es obligatorio.'],
+}
 
 export const RegisterPage = () => {
 
@@ -14,18 +27,6 @@ export const RegisterPage = () => {
 
   const { status, errorMessage } = useSelector(state => state.auth);
   const isCheckingAuthentication = useMemo(() => status === 'checking', [status]);
-
-  const formData = {
-    email: '',
-    password: '',
-    displayName: ''
-  }
-
-  const formValidations = {
-    email: [(value) => value.includes('@'), 'El correo debe de tener una @.'],
-    password: [(value) => value.length >= 6, 'El password debe de tener más de 6 letras.'],
-    displayName: [(value) => value.length >= 1, 'El nombre es obligatorio.'],
-  }
 
   const {
     formState, displayName, email, password, onInputChange,
