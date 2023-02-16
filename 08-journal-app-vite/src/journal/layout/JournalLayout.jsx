@@ -4,6 +4,7 @@ import { NavBar, SideBar } from "../components";
 
 const drawerWidth = 280;
 
+
 export const JournalLayout = ({ children }) => {
     return (
         // Box es como un div
@@ -14,8 +15,9 @@ export const JournalLayout = ({ children }) => {
             <NavBar drawerWidth={drawerWidth} />
 
             {/* Sidebar drawerWidth */}
-
+           
             <SideBar drawerWidth={drawerWidth} />
+            
 
             <Box
                 component='main'
@@ -24,6 +26,7 @@ export const JournalLayout = ({ children }) => {
                 {/* Toolbar */}
 
                 <Toolbar />
+
 
                 {children}
 
