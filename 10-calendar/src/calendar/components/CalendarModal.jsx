@@ -1,4 +1,4 @@
-import { useMemo, useReducer, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { addHours, differenceInSeconds } from "date-fns";
 import swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
@@ -7,7 +7,7 @@ import Modal from "react-modal";
 import DatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import es from 'date-fns/locale/es'
-import { useUiStore } from "../../hooks";
+import { useCalendarStore, useUiStore } from "../../hooks";
 
 
 registerLocale('es', es)
@@ -26,12 +26,14 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export const CalendarModal = () => {
+
     const { isDateModalOpen, closeDateModal } = useUiStore();
-    const [formSubmitted, setFormSubmitted] = useState(false)
+    const [formSubmitted, setFormSubmitted] = useState(false);
+    const { activeEvent } = useCalendarStore();
     
     const [formValues, setFormValues] = useState({
-        title: 'Lionel',
-        notes: 'Cancellieri',
+        title: '',
+        notes: '',
         start: new Date(),
         end: addHours(new Date(), 2)
     });
@@ -45,6 +47,13 @@ export const CalendarModal = () => {
             ? ''
             : 'is-invalid'
     }, [formValues.title, formSubmitted]);
+
+    useEffect(() => {
+        if (activeEvent !== null) {
+            setFormValues({...activeEvent}) // con el operador spread esparzo las propiedades y crea un nuevo objeto
+        }
+    }, [activeEvent])
+    
 
     const onInputChange = ({ target }) => {
         setFormValues({
